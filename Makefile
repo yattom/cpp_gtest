@@ -27,7 +27,7 @@ CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = sample1_unittest
+TESTS = sample1_unittest java_version_test
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -80,5 +80,16 @@ basic_unittest.o : $(USER_DIR)/basic_unittest.cc \
                      $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/basic_unittest.cc
 
+java_version.o : $(USER_DIR)/java_version.cc \
+                     $(USER_DIR)/java_version.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/java_version.cc
+
+java_version_test.o : $(USER_DIR)/java_version_test.cc \
+                     $(USER_DIR)/java_version.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/java_version_test.cc
+
 sample1_unittest : sample1.o sample1_unittest.o basic_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+java_version_test : java_version.o java_version_test.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
