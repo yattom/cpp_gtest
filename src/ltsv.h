@@ -2,7 +2,8 @@
 #define _LTSV_H_
 
 struct _ltsv {
-	int dummy;
+	const char* key;
+	const char* value;
 };
 
 typedef _ltsv* LTSV;
