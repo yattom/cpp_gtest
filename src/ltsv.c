@@ -27,8 +27,7 @@ void ltsv_delete(LTSV* ltsv)
 	free(ltsv);
 }
 
-void ltsv_dump(LTSV* ltsv, char* dump, int maxlen)
-{
+int ltsv_dump_required_len(LTSV* ltsv) {
 	int required_len = 0;
 	for(int i = 0; i < ltsv->max_entries_count; i++) {
 		if(ltsv->entries[i].key == NULL)
@@ -37,7 +36,12 @@ void ltsv_dump(LTSV* ltsv, char* dump, int maxlen)
 		}
 		required_len += strlen(ltsv->entries[i].key) + strlen(ltsv->entries[i].value) + 2;
 	}
-	if(required_len + 1 > maxlen) {
+	return required_len + 1;
+}
+
+void ltsv_dump(LTSV* ltsv, char* dump, int maxlen)
+{
+	if(ltsv_dump_required_len(ltsv) > maxlen) {
 		return;
 	}
 
