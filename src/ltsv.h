@@ -9,13 +9,13 @@ struct _ltsv {
 	} *entries;
 };
 
-typedef _ltsv* LTSV;
+typedef _ltsv LTSV;
 
-LTSV ltsv_init(void);
-void ltsv_delete(LTSV);
-void ltsv_dump(LTSV, char* dump, int maxlen);
-void ltsv_set(LTSV, const char* key, const char* value);
-const char* ltsv_get(LTSV, const char* key);
+LTSV* ltsv_init(void);
+void ltsv_delete(LTSV*);
+void ltsv_dump(LTSV*, char* dump, int maxlen);
+void ltsv_set(LTSV*, const char* key, const char* value);
+const char* ltsv_get(LTSV*, const char* key);
 
 #endif  // _LTSV_H_
 

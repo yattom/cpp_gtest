@@ -5,7 +5,7 @@
 class LtsvTests : public ::testing::Test {
 public:
 	char buf[1000];
-	LTSV ltsv;
+	LTSV* ltsv;
 	virtual void SetUp() {
 		strcpy(buf, "uninitialized");
 		ltsv = ltsv_init();
@@ -15,7 +15,7 @@ public:
 		ltsv_delete(ltsv);
 	}
 
-	const char* dump(LTSV ltsv)
+	const char* dump(LTSV* ltsv)
 	{
 		ltsv_dump(ltsv, buf, sizeof(buf)/sizeof(buf[0]));
 		return buf;

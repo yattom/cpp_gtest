@@ -10,9 +10,9 @@ void init_entry(struct _ltsv::_entry* entry) {
 	entry->value = NULL;
 }
 
-LTSV ltsv_init(void)
+LTSV* ltsv_init(void)
 {
-	LTSV ltsv = (LTSV)malloc(sizeof(LTSV*));
+	LTSV* ltsv = (LTSV*)malloc(sizeof(LTSV));
 	ltsv->max_entries_count = MAX_ENTRIES_COUNT;
 	ltsv->entries = (struct _ltsv::_entry*)malloc(sizeof(struct _ltsv::_entry[ltsv->max_entries_count]));
 	for(int i = 0; i < ltsv->max_entries_count; i++) {
@@ -21,13 +21,13 @@ LTSV ltsv_init(void)
 	return ltsv;
 }
 
-void ltsv_delete(LTSV ltsv)
+void ltsv_delete(LTSV* ltsv)
 {
 	free(ltsv->entries);
 	free(ltsv);
 }
 
-void ltsv_dump(LTSV ltsv, char* dump, int maxlen)
+void ltsv_dump(LTSV* ltsv, char* dump, int maxlen)
 {
 	dump[0] = '\0';
 	for(int i = 0; i < ltsv->max_entries_count; i++) {
@@ -42,7 +42,7 @@ void ltsv_dump(LTSV ltsv, char* dump, int maxlen)
 	}
 }
 
-void ltsv_set(LTSV ltsv, const char* key, const char* value)
+void ltsv_set(LTSV* ltsv, const char* key, const char* value)
 {
 	for(int i = 0; i < ltsv->max_entries_count; i++) {
 		if(ltsv->entries[i].key == NULL)
@@ -54,7 +54,7 @@ void ltsv_set(LTSV ltsv, const char* key, const char* value)
 	}
 }
 
-const char* ltsv_get(LTSV ltsv, const char* key)
+const char* ltsv_get(LTSV* ltsv, const char* key)
 {
 	for(int i = 0; i < ltsv->max_entries_count; i++) {
 		if(strcmp(ltsv->entries[i].key, key) == 0)
