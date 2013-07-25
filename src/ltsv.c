@@ -9,4 +9,5 @@ LTSV ltsv_init(void)
 
 void ltsv_dump(LTSV, char* dump, int maxlen)
 {
+	strcpy(dump, "");
 }
