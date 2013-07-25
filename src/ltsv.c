@@ -8,6 +8,12 @@ LTSV ltsv_init(void)
 	LTSV ltsv = (LTSV)malloc(sizeof(LTSV*));
 	ltsv->key = NULL;
 	ltsv->value = NULL;
+	return ltsv;
+}
+
+void ltsv_delete(LTSV ltsv)
+{
+	free(ltsv);
 }
 
 void ltsv_dump(LTSV ltsv, char* dump, int maxlen)

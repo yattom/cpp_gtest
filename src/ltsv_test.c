@@ -11,6 +11,10 @@ public:
 		ltsv = ltsv_init();
 	}
 
+	virtual void TearDown() {
+		ltsv_delete(ltsv);
+	}
+
 	const char* dump(LTSV ltsv)
 	{
 		ltsv_dump(ltsv, buf, sizeof(buf)/sizeof(buf[0]));
