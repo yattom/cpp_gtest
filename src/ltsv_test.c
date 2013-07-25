@@ -8,3 +8,9 @@ TEST(LtsvTest, Empty) {
 	EXPECT_STREQ("", buf);
 }
 
+TEST(LtsvTest, SetAndGet) {
+	LTSV ltsv = ltsv_init();
+	ltsv_set(ltsv, "foo", "bar");
+	EXPECT_STREQ("bar", ltsv_get(ltsv, "foo"));
+}
+
