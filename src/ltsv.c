@@ -6,8 +6,11 @@
 LTSV ltsv_init(void)
 {
 	LTSV ltsv = (LTSV)malloc(sizeof(LTSV*));
-	ltsv->key = NULL;
-	ltsv->value = NULL;
+	ltsv->keys = (const char**)malloc(sizeof(const char*[10]));
+	ltsv->values = (const char**)malloc(sizeof(const char*[10]));
+	for(int i = 0; i < 10; i++) {
+		ltsv->keys[i] = NULL;
+	}
 	return ltsv;
 }
 
@@ -18,20 +21,38 @@ void ltsv_delete(LTSV ltsv)
 
 void ltsv_dump(LTSV ltsv, char* dump, int maxlen)
 {
-	if(ltsv->key == NULL) {
-		strcpy(dump, "");
-		return;
+	dump[0] = '\0';
+	for(int i = 0; i < 10; i++) {
+		if(ltsv->keys[i] == NULL)
+		{
+			continue;
+		}
+		strcat(dump, ltsv->keys[i]);
+		strcat(dump, ":");
+		strcat(dump, ltsv->values[i]);
+		strcat(dump, "\n");
 	}
-	sprintf(dump, "%s:%s\n", ltsv->key, ltsv->value);
 }
 
 void ltsv_set(LTSV ltsv, const char* key, const char* value)
 {
-	ltsv->key = key;
-	ltsv->value = value;
+	for(int i = 0; i < 10; i++) {
+		if(ltsv->keys[i] == NULL)
+		{
+			ltsv->keys[i] = key;
+			ltsv->values[i] = value;
+			return;
+		}
+	}
 }
 
 const char* ltsv_get(LTSV ltsv, const char* key)
 {
-	return ltsv->value;
+	for(int i = 0; i < 10; i++) {
+		if(strcmp(ltsv->keys[i], key) == 0)
+		{
+			return ltsv->values[i];
+		}
+	}
+	return NULL;
 }

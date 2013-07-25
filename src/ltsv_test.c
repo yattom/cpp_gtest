@@ -27,9 +27,17 @@ TEST_F(LtsvTests, Empty) {
 	EXPECT_STREQ("", dump(ltsv));
 }
 
-TEST_F(LtsvTests, SetAndGet) {
+TEST_F(LtsvTests, SetAndGetOnlyOneKey) {
 	ltsv_set(ltsv, "foo", "bar");
 	EXPECT_STREQ("bar", ltsv_get(ltsv, "foo"));
 	EXPECT_STREQ("foo:bar\n", dump(ltsv));
+}
+
+TEST_F(LtsvTests, SetAndGetTwoKeys) {
+	ltsv_set(ltsv, "foo", "bar");
+	ltsv_set(ltsv, "bazz", "quux");
+	EXPECT_STREQ("bar", ltsv_get(ltsv, "foo"));
+	EXPECT_STREQ("quux", ltsv_get(ltsv, "bazz"));
+	EXPECT_STREQ("foo:bar\nbazz:quux\n", dump(ltsv));
 }
 
