@@ -41,3 +41,20 @@ TEST_F(LtsvTests, SetAndGetTwoKeys) {
 	EXPECT_STREQ("foo:bar\nbazz:quux\n", dump(ltsv));
 }
 
+TEST_F(LtsvTests, DumpDoesntBufferOverrun_NotEnough) {
+	ltsv_set(ltsv, "k", "v");
+	ltsv_dump(ltsv, buf, 4); // "k:v\n" requires length of 5
+	EXPECT_STREQ("uninitialized", buf);
+}
+
+TEST_F(LtsvTests, DumpDoesntBufferOverrun_JustEnough) {
+	ltsv_set(ltsv, "k", "v");
+	ltsv_dump(ltsv, buf, 5); // "k:v\n" requires length of 5
+	EXPECT_STREQ("k:v\n", buf);
+}
+
+TEST_F(LtsvTests, DumpDoesntBufferOverrun_MoreThanEnough) {
+	ltsv_set(ltsv, "k", "v");
+	ltsv_dump(ltsv, buf, 6); // "k:v\n" requires length of 5
+	EXPECT_STREQ("k:v\n", buf);
+}
