@@ -1,6 +1,10 @@
-#include "sample1.h"
+#include "ltsv.h"
 #include "gtest/gtest.h"
 
-TEST(LtsvTest, Dummy) {
-  EXPECT_EQ(0, 1);
+TEST(LtsvTest, Empty) {
+	LTSV ltsv = ltsv_init();
+	char buf[100] = "uninitialized";
+	ltsv_dump(ltsv, buf, sizeof(buf)/sizeof(buf[0]));
+	EXPECT_STREQ("", buf);
 }
+
