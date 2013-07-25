@@ -1,3 +1,4 @@
 *.o
 *.a
 sample1_unittest
+unittest

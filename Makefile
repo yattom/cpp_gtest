@@ -27,7 +27,7 @@ CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = sample1_unittest
+TESTS = unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -35,6 +35,9 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
                 $(GTEST_DIR)/include/gtest/internal/*.h
 
 # House-keeping build targets.
+
+test : all
+	./$(TESTS)
 
 all : $(TESTS)
 
@@ -82,3 +85,14 @@ basic_unittest.o : $(USER_DIR)/basic_unittest.cc \
 
 sample1_unittest : sample1.o sample1_unittest.o basic_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+unittest : ltsv.o ltsv_test.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+ltsv.o : $(USER_DIR)/ltsv.c $(USER_DIR)/ltsv.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/ltsv.c
+
+ltsv_test.o : $(USER_DIR)/ltsv_test.c \
+                     $(USER_DIR)/ltsv.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/ltsv_test.c
+
