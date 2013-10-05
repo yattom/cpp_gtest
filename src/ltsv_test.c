@@ -56,7 +56,7 @@ TEST_F(LtsvTests, DumpDoesntBufferOverrun_NotEnough) {
 TEST_F(LtsvTests, DumpDoesntBufferOverrun_JustEnough) {
 	ltsv_set(ltsv, "k", "v");
 	ltsv_dump(ltsv, buf, 5); // "k:v\n" requires length of 5
-	EXPECT_STREQ("k:v\n", buf);
+	EXPECT_STREQ("k:v\n", buf) << "バッファがピッタリなら文字列化できる";
 }
 
 TEST_F(LtsvTests, DumpDoesntBufferOverrun_MoreThanEnough) {
